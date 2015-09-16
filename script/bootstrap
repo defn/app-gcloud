@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+function bootstrap {
+  local shome="$(unset CDPATH; cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
+  source "$shome/script/profile"
+
+  local tmp_install="$(mktemp -t XXXXXX)"
+  trap "rm -f \"$tmp_install\"" EXIT
+
+  curl https://dl.google.com/dl/cloudsdk/channels/rapid/install_google_cloud_sdk.bash > "$tmp_install"
+  bash "$tmp_install" --disable-prompts --install-dir="$shome/vendor"
+  ln -nfs ../vendor/google-cloud-sdk/bin/{bq,gcloud,gsutil,git-credential-gcloud.sh} "$shome/bin/"
+}
+
+bootstrap
