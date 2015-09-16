@@ -3,6 +3,9 @@
 function profile {
   local shome="$(unset CDPATH; cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
   PATH="$shome/bin:$shome/exec:$PATH"
+
+  source "$shome/vendor/google-cloud-sdk/path.bash.inc"
+  source "$shome/vendor/google-cloud-sdk/completion.bash.inc"
 }
 
 profile
