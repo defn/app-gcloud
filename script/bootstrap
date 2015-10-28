@@ -8,7 +8,8 @@ function bootstrap {
   trap "rm -f \"$tmp_install\"" EXIT
 
   curl https://dl.google.com/dl/cloudsdk/channels/rapid/install_google_cloud_sdk.bash > "$tmp_install"
-  bash "$tmp_install" --disable-prompts --install-dir="$shome/vendor"
+  local tmp_rc="$(mktemp -d -t XXXXXX)"
+  env HOME="$tmp_rc" bash "$tmp_install" --disable-prompts --install-dir="$shome/vendor"
   ln -nfs ../vendor/google-cloud-sdk/bin/{bq,gcloud,gsutil,git-credential-gcloud.sh} "$shome/bin/"
 }
 
